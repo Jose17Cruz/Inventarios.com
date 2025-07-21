@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Menú Dropdown</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #2c3e50;
+      color: #fff;
+    }
+
+    header {
+      background: #1a252f;
+      padding: 20px;
+      position: relative;
+    }
+
+    .cd-dropdown-wrapper {
+      position: relative;
+      text-align: center;
+    }
+
+    .cd-dropdown-trigger {
+      color: #fff;
+      background: #2980b9;
+      padding: 12px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      border-radius: 5px;
+      display: inline-block;
+      transition: background 0.3s;
+    }
+
+    .cd-dropdown-trigger:hover {
+      background: #3498db;
+    }
+
+    .cd-dropdown {
+      position: fixed;
+      z-index: 10;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #1a252f;
+      transform: translateY(-100%);
+      transition: transform 0.5s;
+    }
+
+    .cd-dropdown.dropdown-is-active {
+      transform: translateY(0);
+    }
+
+    .cd-dropdown h2 {
+      color: #fff;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 24px;
+      border-bottom: 1px solid #34495e;
+    }
+
+    .cd-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: #fff;
+      font-size: 18px;
+      text-decoration: none;
+    }
+
+    .cd-dropdown-content {
+      list-style: none;
+      padding: 30px 0;
+      text-align: center;
+    }
+
+    .cd-dropdown-content li {
+      margin: 20px 0;
+    }
+
+    .cd-dropdown-content a {
+      color: #ecf0f1;
+      text-decoration: none;
+      font-size: 20px;
+      transition: color 0.3s;
+    }
+
+    .cd-dropdown-content a:hover {
+      color: #1abc9c;
+    }
+
+    main {
+      padding: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="cd-dropdown-wrapper">
+    <a class="cd-dropdown-trigger" href="#0" onclick="toggleDropdown()">☰ Menú</a>
+    <nav class="cd-dropdown" id="dropdown">
+      <h2>Opciones</h2>
+      <a href="#0" class="cd-close" onclick="toggleDropdown()">✖ Cerrar</a>
+      <ul class="cd-dropdown-content">
+        <li><a href="mostrar.php">📄 Mostrar Tabla</a></li>
+        <li><a href="insertar_datos.html">📝 Insertar Datos</a></li>
+        <li><a href="exportar_pdf.php">📤 Exportar a PDF</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="cd-main-content">
+  <h1>Bienvenido</h1>
+  <p>Selecciona una opción desde el menú desplegable</p>
+</main>
+
+<script>
+  function toggleDropdown() {
+    document.getElementById('dropdown').classList.toggle('dropdown-is-active');
+  }
+
+  // Cierra el menú si se hace clic fuera
+  window.addEventListener('click', function (e) {
+    const dropdown = document.getElementById('dropdown');
+    const trigger = document.querySelector('.cd-dropdown-trigger');
+    if (!dropdown.contains(e.target) && !trigger.contains(e.target)) {
+      dropdown.classList.remove('dropdown-is-active');
+    }
+  });
+</script>
+
+</body>
+</html>

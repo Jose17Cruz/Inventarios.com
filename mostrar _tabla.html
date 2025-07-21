@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mostrar Tabla de Productos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #232526, #414345);
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 0;
+    }
+    .tabla-container {
+      background: rgba(255,255,255,0.12);
+      box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 32px 28px;
+      margin-bottom: 40px;
+      width: 95vw;
+      max-width: 1100px;
+      animation: fadeIn 1s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    h2 {
+      color: #00e6ff;
+      text-align: center;
+      margin-bottom: 24px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px #00e6ff88;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 12px #00e6ff44;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #00e6ff33;
+      text-align: center;
+      font-size: 16px;
+      color: #fff;
+    }
+    th {
+      background: linear-gradient(90deg, #00e6ff, #ff00cc);
+      color: #fff;
+      font-weight: 600;
+      border: none;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    tr:hover {
+      background: rgba(0,230,255,0.12);
+      transition: background 0.2s;
+    }
+    @media (max-width: 700px) {
+      .tabla-container { padding: 12px 2px; }
+      th, td { font-size: 13px; padding: 7px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="tabla-container">
+    <h2>📋 Productos Insertados</h2>
+    <table id="tabla">
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Marca</th>
+          <th>Modelo</th>
+          <th>Calidad</th>
+          <th>Piezas</th>
+          <th>Precio</th>
+          <th>Nombre</th>
+          <th>Cantidad</th>
+          <th>Precio Simple</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Los productos se mostrarán aquí -->
+      </tbody>
+    </table>
+  </div>
+  <script>
+    // Simulación de productos guardados en localStorage desde insertar_datos.html
+    // Puedes adaptar esto si usas backend
+    function cargarProductos() {
+      // Ejemplo: [{tipo, marca, modelo, calidad, piezas, precio, nombre, cantidad, precio_simple}]
+      const productos = JSON.parse(localStorage.getItem("productos")) || [];
+      const tbody = document.querySelector("#tabla tbody");
+      tbody.innerHTML = "";
+
+      if (productos.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9">No hay productos insertados.</td></tr>`;
+        return;
+      }
+
+      productos.forEach(prod => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${prod.tipo || ""}</td>
+            <td>${prod.marca || ""}</td>
+            <td>${prod.modelo || ""}</td>
+            <td>${prod.calidad || ""}</td>
+            <td>${prod.piezas || prod.cantidad || ""}</td>
+            <td>${prod.precio ? "$" + parseFloat(prod.precio).toFixed(2) : (prod.precio_simple ? "$" + parseFloat(prod.precio_simple).toFixed(2) : "")}</td>
+            <td>${prod.nombre || ""}</td>
+            <td>${prod.cantidad || ""}</td>
+            <td>${prod.precio_simple ? "$" + parseFloat(prod.precio_simple).toFixed(2) : ""}</td>
+          </tr>
+        `;
+      });
+    }
+
+    cargarProductos();
+
+    // Función para insertar un producto (ejemplo)
+    function insertarProducto(tipo, marca, modelo, calidad, piezas, precio, nombre, cantidad, precio_simple) {
+      const producto = {
+        tipo,
+        marca,
+        modelo,
+        calidad,
+        piezas,
+        precio,
+        nombre,
+        cantidad,
+        precio_simple
+      };
+      let productos = JSON.parse(localStorage.getItem("productos")) || [];
+      productos.push(producto);
+      localStorage.setItem("productos", JSON.stringify(productos));
+      cargarProductos(); // Recargar productos para mostrar el nuevo
+    }
+
+    // Ejemplo de uso de insertarProducto
+    // insertarProducto("Electrónica", "Samsung", "Galaxy S21", "Alta", 50, 799.99, "Smartphone", 10, 79.99);
+  </script>
+</body>
+</html>

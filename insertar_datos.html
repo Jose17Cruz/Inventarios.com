@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Insertar Producto</title>
+    <link rel="stylesheet" href="../estilosb/estilos.css">
+
+</head>
+<body>
+  <div class="search-container">
+    <input type="text" id="buscador" placeholder="🔎 Buscar producto, marca, modelo...">
+    <button onclick="buscarProducto()">Buscar</button>
+  </div>
+  <div class="form-container">
+    <h2>📝 Insertar Producto</h2>
+    <div class="input-group">
+      <select id="tipo" required onchange="mostrarCampos()">
+        <option value="" disabled selected>Selecciona tipo</option>
+        <option value="Pantalla">Pantalla</option>
+        <option value="Tablilla">Tablilla</option>
+        <option value="Centro de Carga">Centro de Carga</option>
+        <option value="Pila">Pila</option>
+        <option value="Otro">Otro</option>
+      </select>
+      <label for="tipo">Tipo de Producto</label>
+    </div>
+    <div id="pantalla-campos">
+      <div class="input-group">
+        <input type="text" id="marca" placeholder=" " required list="marcas">
+        <label for="marca">Marca</label>
+        <datalist id="marcas">
+          <option value="Samsung">
+          <option value="LG">
+          <option value="Sony">
+          <option value="Philips">
+          <option value="Otra">
+        </datalist>
+      </div>
+      <div class="input-group">
+        <input type="text" id="modelo" placeholder=" " required>
+        <label for="modelo">Modelo</label>
+      </div>
+      <div class="input-group">
+        <input type="text" id="calidad" placeholder=" " required>
+        <label for="calidad">Calidad</label>
+      </div>
+      <div class="input-group">
+        <input type="number" id="piezas" placeholder=" " required>
+        <label for="piezas">Cantidad de Piezas</label>
+      </div>
+      <div class="input-group">
+        <input type="number" step="0.01" id="precio" placeholder=" " required>
+        <label for="precio">Precio</label>
+      </div>
+    </div>
+    <div id="simple-campos" class="hidden">
+      <div class="input-group">
+        <input type="text" id="nombre" placeholder=" " required>
+        <label for="nombre">Nombre del Producto</label>
+      </div>
+      <div class="input-group">
+        <input type="number" id="cantidad" placeholder=" " required>
+        <label for="cantidad">Cantidad</label>
+      </div>
+      <div class="input-group">
+        <input type="number" step="0.01" id="precio_simple" placeholder=" " required>
+        <label for="precio_simple">Precio</label>
+      </div>
+    </div>
+    <button onclick="insertarProducto()">💾 Guardar</button>
+  </div>
+  <script>
+    function mostrarCampos() {
+      const tipo = document.getElementById("tipo").value;
+      const pantallaCampos = document.getElementById("pantalla-campos");
+      const simpleCampos = document.getElementById("simple-campos");
+      if (tipo === "Pantalla") {
+        pantallaCampos.classList.remove("hidden");
+        simpleCampos.classList.add("hidden");
+      } else if (tipo) {
+        pantallaCampos.classList.add("hidden");
+        simpleCampos.classList.remove("hidden");
+      } else {
+        pantallaCampos.classList.add("hidden");
+        simpleCampos.classList.add("hidden");
+      }
+    }
+
+    function insertarProducto() {
+      const tipo = document.getElementById("tipo").value;
+
+      if (!tipo) {
+        alert("Selecciona el tipo de producto");
+        return;
+      }
+
+      if (tipo === "Pantalla") {
+        const marca = document.getElementById("marca").value.trim();
+        const modelo = document.getElementById("modelo").value.trim();
+        const calidad = document.getElementById("calidad").value.trim();
+        const piezas = document.getElementById("piezas").value.trim();
+        const precio = document.getElementById("precio").value.trim();
+
+        if (!marca || !modelo || !calidad || !piezas || !precio) {
+          alert("Por favor completa todos los campos");
+          return;
+        }
+        // Guardar producto tipo Pantalla en localStorage
+        const producto = {
+          tipo,
+          marca,
+          modelo,
+          calidad,
+          piezas,
+          precio
+        };
+        let productos = JSON.parse(localStorage.getItem("productos")) || [];
+        productos.push(producto);
+        localStorage.setItem("productos", JSON.stringify(productos));
+        limpiarFormulario();
+        alert("Pantalla guardada correctamente");
+      } else {
+        const nombre = document.getElementById("nombre").value.trim();
+        const cantidad = document.getElementById("cantidad").value.trim();
+        const precio_simple = document.getElementById("precio_simple").value.trim();
+
+        if (!nombre || !cantidad || !precio_simple) {
+          alert("Por favor completa todos los campos");
+          return;
+        }
+        // Guardar producto simple en localStorage
+        const producto = {
+          tipo,
+          nombre,
+          cantidad,
+          precio_simple
+        };
+        let productos = JSON.parse(localStorage.getItem("productos")) || [];
+        productos.push(producto);
+        localStorage.setItem("productos", JSON.stringify(productos));
+        limpiarFormulario();
+        alert("Producto guardado correctamente");
+      }
+    }
+
+    function limpiarFormulario() {
+      document.getElementById("tipo").value = "";
+      document.getElementById("marca").value = "";
+      document.getElementById("modelo").value = "";
+      document.getElementById("calidad").value = "";
+      document.getElementById("piezas").value = "";
+      document.getElementById("precio").value = "";
+      document.getElementById("nombre").value = "";
+      document.getElementById("cantidad").value = "";
+      document.getElementById("precio_simple").value = "";
+      mostrarCampos();
+    }
+
+    function buscarProducto() {
+      const query = document.getElementById("buscador").value.trim();
+      if (!query) {
+        alert("Escribe algo para buscar");
+        return;
+      }
+      // Aquí puedes agregar la lógica para buscar productos
+      alert("Buscando: " + query);
+    }
+
+    // Inicializa los campos al cargar
+    mostrarCampos();
+  </script>
+</body>
+</html>

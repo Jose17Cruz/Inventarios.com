@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Orbitron', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.container {
+  animation: glow-in 1.5s ease-in-out forwards;
+}
+
+@keyframes glow-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.login-box {
+  background: rgba(0, 0, 0, 0.75);
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+  width: 350px;
+  border: 2px solid #0ff;
+  position: relative;
+}
+
+.titulo {
+  color: #00ffff;
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 30px;
+  text-shadow: 0 0 10px #00ffff;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    text-shadow: 0 0 10px #00ffff;
+  }
+  50% {
+    text-shadow: 0 0 25px #00ffff;
+  }
+}
+
+.input-box {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.input-box input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #0ff;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  outline: none;
+  transition: 0.3s;
+}
+
+.input-box label {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  color: #aaa;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+  top: -20px;
+  font-size: 12px;
+  color: #0ff;
+}
+
+.bar {
+  display: block;
+  height: 2px;
+  background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+  animation: bar-glow 2s linear infinite;
+}
+
+@keyframes bar-glow {
+  0% { background-position: 0% }
+  100% { background-position: 100% }
+}
+
+input[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(90deg, #ff00ff, #00ffff);
+  border: none;
+  border-radius: 8px;
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00ffff;
+  transition: 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #00ffff, #ff00ff);
+  box-shadow: 0 0 20px #00ffff;
+}
